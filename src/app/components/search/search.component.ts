@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -19,24 +20,29 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input type="search" class="grow" placeholder="Search" />
-        @if(form.invalid && form.dirty && form.touched) {
-          <span class="text-error" >Need at least 3 characteres for search</span>
-        }
+        <input type="search" formControlName="search" class="grow"
+          placeholder="Search By Breed name" />
       </label>
     </form>
 
   `,
   styles: ``
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   @Output() searchPayload = new EventEmitter<string>();
+  private sub!: Subscription;
 
   constructor() {
-    this.form = new FormGroup({
-      search: new FormControl('', Validators.minLength(3))
-    })
+    this.form = new FormGroup({ search: new FormControl('') })
+  }
+
+  ngOnInit(): void {
+    this.sub = this.form.valueChanges.subscribe(() => this.submit());
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   submit() {

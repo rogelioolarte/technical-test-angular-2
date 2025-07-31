@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadBreeds, loadTotalBreeds, selectBreeds, selectPageable } from '../../store/breeds.state';
+import { loadBreeds, loadTotalBreeds, searchByBreedName, selectBreeds, selectPageable } from '../../store/breeds.state';
 import { BreedCardComponent } from "../../components/breed-card/breed-card.component";
 import { SearchComponent } from "../../components/search/search.component";
 
@@ -16,17 +16,17 @@ import { SearchComponent } from "../../components/search/search.component";
           <app-breed-card [breed]="breed" />
         }
       </div>
-      <div class="flex flex-row mx-auto" >
-        <div (click)="onPreviousPage()" aria-hidden="true"
-          [class]="(pageable().page) > 0 ? 'btn': 'btn btn-disabled'" > < </div>
+      @if(pageable().totalPages > 0) {
+        <div class="flex flex-row mx-auto" >
+          <div (click)="onPreviousPage()" aria-hidden="true"
+            [class]="(pageable().page) > 0 ? 'btn': 'btn btn-disabled'" > < </div>
           <div class="btn btn-disabled" >{{ pageable().page+1 }}</div>
           <div (click)="onNextPage()" aria-hidden="true"
             [class]="(pageable().page) <= (pageable().totalPages) ?
             'btn': 'btn btn-disabled'" > >
           </div>
         </div>
-      </div>
-      <div>
+      }
     </div>
   `,
   styles: ``
@@ -54,6 +54,9 @@ export class BreedsComponent implements OnInit {
   }
 
   onSearch(search: string) {
+    if(search) {
+      this.store.dispatch(searchByBreedName({ search }));
+    }
     this.applyPageable({ search });
   }
 
