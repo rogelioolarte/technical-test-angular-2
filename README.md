@@ -28,16 +28,13 @@ Only the following structural directives will be used:
 
 - This demonstrates control flow in templates without additional complexity.
 
-3. **Forms**
-Only **reactive forms** (`ReactiveFormsModule`), for example, a breed search field with simple validation: required, minimum characters, etc.
-
-4. **HTTP / DI / Routing**
+3. **HTTP / DI / Routing**
 
 * Injectable service with `HttpClient` consuming the `/v1/breeds` endpoints.
 * Main routes: `/`, `/breeds`, `/breeds/:id`.
 * Modules and services provided via DI in `@Injectable({providedIn: 'root'})`.
 
-5. **Unit Testing**
+4. **Unit Testing**
 
 * API service: Test with `HttpTestingController`, verifying correct calls and error handling.
 * Components: Test with fakes or stubs, template structure verification, conditional rendering, and form behavior.
@@ -52,7 +49,6 @@ src/
 │ ├─ components/
 | | └─ breed-card/
 │ ├─ pages/
-│ │ └─ create-breed/ 
 │ │ └─ breed/ 
 │ │ └─ breeds/ 
 │ ├─ services/ 
