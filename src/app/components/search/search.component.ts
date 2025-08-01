@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
           </g>
         </svg>
         <input type="search" formControlName="search" class="grow"
-          placeholder="Search By Breed name" />
+          placeholder="Search By Breed Name" />
       </label>
     </form>
 

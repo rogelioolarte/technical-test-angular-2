@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { Store } from '@ngrx/store'
 import { getById, selectSelectedBreed } from '../../store/breeds.state';
@@ -24,7 +24,7 @@ import { toSignal } from '@angular/core/rxjs-interop'
         </div>
       </div>
     } @else {
-      <div class="card bg-base-100 w-96 shadow-sm">Breed Not Found</div>
+      <p class="mx-auto">Breed Not Found</p>
     }
   `,
   styles: ``
@@ -32,7 +32,6 @@ import { toSignal } from '@angular/core/rxjs-interop'
 export class BreedComponent implements OnInit {
   readonly imageUrl = (id?: string) => id ? `https://cdn2.thecatapi.com/images/${id}.jpg` : '';
 
-  router = inject(Router);
   store = inject(Store);
   route = inject(ActivatedRoute);
   id = toSignal(this.route.params.pipe(map(v => String(v['id']))));
